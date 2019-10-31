@@ -1,18 +1,17 @@
-Got to clone and clone the repository wherever you want it.
-
+Got to clone and clone the repository and stick wherever you want 
+to work on it from.
 
 $git pull -gets any new files or changes and updates your directory
+	   should do before starting to work.
+
+$git status -shows current files that are not in the repo amongst other things
+
+$git add <file name here> - must be followed by a commit and push.
 
 The two below must be done together
 $git commit -m "your message here"
 $git push -pushes commited changes to the repo
 
-$git status -shows current files that are not in the repo
-
-
-
-Adding Files to Repo
-	1. Go to git directory you cloned or have been working in via the terminal.
-	2. $git add <file name here>
-	3. $git commit -m "your message here"
-	4. $git push origin master
+If that doesn't work and it says a file is not staged you need to
+$git commit <file name here> -m "your message here"
+$git push 
