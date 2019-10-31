@@ -50,6 +50,8 @@ userAgents = [
 
 #def requestMaster():
 
+#def duckDuckGoRequester(query):
+
 def googleRequester(query):
     URI = "https://www.google.com/search?q={" + query + "}&num=lnms"
     tryCount = 0
