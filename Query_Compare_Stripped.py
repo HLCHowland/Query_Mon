@@ -52,6 +52,53 @@ userAgents = [
 
 #def duckDuckGoRequester(query):
 
+
+def bingRequester(query):
+    URI = "http://www.bing.com/search?q=%sBogus"
+    response = requests.get(URI, {"User-Agent": userAgents[random.randint(0, (len(userAgents) - 1))]})
+    html = BeautifulSoup(response.text, "html.parser")
+    print(html)
+
+    [s.extract() for s in html('span')]
+    unwantedTags = ['a', 'strong', 'cite']
+    for tag in unwantedTags:
+       for match in html.findAll(tag):
+           match.replaceWithChildren()
+
+    results = html.findAll('li', { "class" : "b_algo" })
+    for result in results:
+            print("# TITLE: " + str(result.find('h2')).replace(" ", " ") + "\n#")
+            print("# DESCRIPTION: " + str(result.find('p')).replace(" ", " "))
+            print("# ___________________________________________________________\n#")
+
+    print(results)
+    print("\n\n\n\n\n\n")
+    print(html)
+
+    return 0
+
+    # if __name__=='__main__':
+    #     links = search('Shakespeare')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def googleRequester(query):
     URI = "https://www.google.com/search?q={" + query + "}&num=lnms"
     tryCount = 0
@@ -86,6 +133,8 @@ def googleRequester(query):
     searchResults = [links, titles, descriptions]
     return searchResults
 
-x = googleRequester("big cat")
+# x = googleRequester("big cat")
+#
+# print(x[1])
 
-print(x[1])
+bingRequester("d")
