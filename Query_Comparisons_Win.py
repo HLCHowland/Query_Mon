@@ -327,7 +327,7 @@ def reportsInteractor():
 #Command is split up so relevant index can be addressed.
             elif ((prompt.split()))[0] == "read":
                 reportNum = (int((prompt.split())[1])) - 1
-                report = open(path + reportList[reportNum])
+                report = open(path + "\\" + reportList[reportNum])
                 print(report.read())
             elif prompt == 'clear':
                 confirm = input("  Are you sure?\n    yes/no\n> ")
