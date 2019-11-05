@@ -26,7 +26,7 @@ class GUI:
     def comparisons(self):
         csv_file_path = askopenfilename()
         print(csv_file_path)
-        with open(csv_file_path, 'r', encoding='ascii') as f:
+        with open(csv_file_path, 'r', encoding='utf8') as f:
             users = []
             reader = csv.reader(f)
             for row in reader:
