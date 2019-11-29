@@ -1,5 +1,6 @@
 import tkinter as tk
 import os
+import pickle
 
 
 class GUI:
@@ -9,7 +10,7 @@ class GUI:
         master = tk.Tk()
         tk.Label(master, text="Main Menu").grid(row=0)
 
-        tk.Button(master, text='Query', command=self.query_list).grid(row=1, column=0, sticky=tk.W, padx=4, pady=4)
+        tk.Button(master, text='Query', command=self.Queries).grid(row=1, column=0, sticky=tk.W, padx=4, pady=4)
         tk.Button(master, text='Monitor', command=self.monitor).grid(row=1, column=2, sticky=tk.W, padx=4, pady=4)
         tk.Button(master, text='Report', command=self.reports).grid(row=1, column=5, sticky=tk.W, padx=4, pady=4)
 
@@ -82,21 +83,6 @@ class GUI:
         tk.Label(monitor_freq, text='Monitor Freq.').grid(row=0)
         tk.mainloop()
 
-    def show_entry_fields(self):
-        print((e1.get()))
-
-    def query_list(self):
-        query = tk.Tk()
-        tk.Label(query, text="Add Query").grid(row=0)
-
-        global e1
-        e1 = tk.Entry(query)
-
-        e1.grid(row=1, column=0)
-
-        tk.Button(query, text='Enter', command=self.show_entry_fields).grid(row=2, column=0, sticky=tk.W, pady=4)
-
-        tk.mainloop()
 
     def queryScore(self):
         path = (os.getcwd() + "\Comparisons")
@@ -153,6 +139,59 @@ class GUI:
 
         for i in lists:
             reportcount.insert(tk.END, i)
+
+    def Queries(self):
+
+        #   Open's up the file and prints out what's in it.
+        with open("queries.pickle", "rb") as fp:
+            queries = pickle.load(fp)
+
+        #   Button for the selection of the query
+        def addItem():
+            add = e1.get()
+            list.insert('end', add)
+            e1.delete(0, 'end')
+
+        def removeItem():
+            dele = e2.get()
+            for i in dele[::-1]:
+                list.delete(i)
+            e2.delete(0, 'end')
+
+        root = tk.Tk()
+        root.title("Queries")
+        root.geometry('480x450')
+
+        #   Add Query
+        label = tk.Label(root, text='Add Query', font=('Helvetica', 14, 'bold'))
+        label.grid(row=2, column=8)
+        e1 = tk.Entry(root)
+        e1.grid(row=3, column=8)
+
+        button = tk.Button(root, text='Add', command=addItem)
+        button.grid(row=4, column=8)
+
+        #   Delete Query
+        label = tk.Label(root, text='Delete Query', font=('Helvetica', 14, 'bold'))
+        label.grid(row=6, column=8)
+        e2 = tk.Entry(root)
+        e2.grid(row=7, column=8)
+
+        button = tk.Button(root, text='Delete', command=removeItem)
+        button.grid(row=8, column=8)
+
+        #   Listbox
+        label1 = tk.Listbox(root, text='Available Queries', font=('Helvetica', 18, 'bold'))
+        label1.grid(row=0, column=0, padx=10, pady=20)
+
+        list = tk.Listbox(root, height=18, width=15, border=0)
+        list.grid(row=2, column=0, columnspan=3, rowspan=10, pady=1, padx=5)
+        for q in queries:
+            list.insert(tk.END, q)
+
+        #   ScrollBar
+        scrollbar = tk.Scrollbar(root)
+        scrollbar.grid(row=2, column=3, padx=40)
 
 
 def main():
