@@ -9,18 +9,31 @@ with open("queries.pickle", "rb") as fp:
     queries = pickle.load(fp)
 
 
-#   Button for the selection of the query
+#   Add an item to the listbox
 def addItem():
     add = e1.get()
     list.insert('end', add)
     e1.delete(0, 'end')
 
+#   Remove the selected item from the listbox
+def deleteselectedItem():
+    current_selection = list.curselection()
+    list.delete(current_selection)
+
+#   Remove the input item from the listbox.
 def removeItem():
     dele = e2.get()
     for i in dele[::-1]:
         list.delete(i)
     e2.delete(0, 'end')
 
+
+#   Clear the list.
+def clearA():
+    list.delete(0, END)
+
+
+#   Main Window
 root = Tk()
 root.title("Queries")
 root.geometry('480x450')
@@ -40,8 +53,17 @@ label.grid(row=6, column=8)
 e2 = Entry(root)
 e2.grid(row=7, column=8)
 
+#   Delete with given input
 button = Button(root, text='Delete', command=removeItem)
 button.grid(row=8, column=8)
+
+#   Clear All
+button1 = Button(root, text='Clear All', command=clearA)
+button1.grid(row=9, column=8)
+
+#   Delete Selected
+button1 = Button(root, text='Delete Selected', command=deleteselectedItem)
+button1.grid(row=10, column=8)
 
 #   Listbox
 label1 = Label(root, text='Available Queries', font=('Helvetica', 18, 'bold'))
