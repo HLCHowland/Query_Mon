@@ -18,13 +18,13 @@ class GUI:
         tk.Label(master, text="Comparisons", font=('Helvetica', 14, 'bold')).grid(row=2, column=6, sticky=tk.W)
 
         vertical = tk.Scrollbar(master, orient=tk.VERTICAL)
-        vertical.grid(row=2, column=3, rowspan=2, sticky=(tk.N, tk.S))
+        vertical.grid(row=3, column=3, rowspan=1, sticky=(tk.N, tk.S))
 
         horizontal = tk.Scrollbar(master, orient=tk.HORIZONTAL)
         horizontal.grid(row=4, column=0, columnspan=3, sticky=(tk.W, tk.E))
 
         vertical2 = tk.Scrollbar(master, orient=tk.VERTICAL)
-        vertical2.grid(row=2, column=9, rowspan=2, sticky=(tk.N, tk.S))
+        vertical2.grid(row=3, column=9, rowspan=1, sticky=(tk.N, tk.S))
 
         horizontal2 = tk.Scrollbar(master, orient=tk.HORIZONTAL)
         horizontal2.grid(row=4, column=6, columnspan=3, sticky=(tk.W, tk.E))
