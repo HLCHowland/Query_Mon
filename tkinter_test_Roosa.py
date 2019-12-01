@@ -8,14 +8,14 @@ class GUI:
     def main_menu(self):
         global master
         master = tk.Tk()
-        tk.Label(master, text="Main Menu").grid(row=0)
+        tk.Label(master, text="Main Menu", font=('Helvetica', 16, 'bold')).grid(row=0, column=0)
 
         tk.Button(master, text='Query', command=self.Queries).grid(row=1, column=0, sticky=tk.W, padx=4, pady=4)
         tk.Button(master, text='Monitor', command=self.monitor).grid(row=1, column=2, sticky=tk.W, padx=4, pady=4)
         tk.Button(master, text='Report', command=self.reports).grid(row=1, column=5, sticky=tk.W, padx=4, pady=4)
 
-        tk.Label(master, text="Reports").grid(row=2, column=0, sticky=tk.W)
-        tk.Label(master, text="Comparisons").grid(row=2, column=6, sticky=tk.W)
+        tk.Label(master, text="Reports", font=('Helvetica', 14, 'bold')).grid(row=2, column=0, sticky=tk.W)
+        tk.Label(master, text="Comparisons", font=('Helvetica', 14, 'bold')).grid(row=2, column=6, sticky=tk.W)
 
         vertical = tk.Scrollbar(master, orient=tk.VERTICAL)
         vertical.grid(row=2, column=3, rowspan=2, sticky=(tk.N, tk.S))
@@ -27,7 +27,7 @@ class GUI:
         vertical2.grid(row=2, column=9, rowspan=2, sticky=(tk.N, tk.S))
 
         horizontal2 = tk.Scrollbar(master, orient=tk.HORIZONTAL)
-        horizontal2.grid(row=4, column=4, columnspan=3, sticky=(tk.W, tk.E))
+        horizontal2.grid(row=4, column=6, columnspan=3, sticky=(tk.W, tk.E))
 
         global reportcount
         reportcount = tk.Listbox(master, yscrollcommand=vertical2.set, xscrollcommand=horizontal2.set,
@@ -53,10 +53,7 @@ class GUI:
         reporter = os.listdir(path)
 
         users = []
-        report = ''
-
-        for i in range(len(reporter)):
-            report = open(path + "\\" + reporter[i], encoding="utf8")
+        report = open(path + "\\" + reporter[0])
 
         x = (report.read())
         y = x.splitlines()
@@ -78,11 +75,12 @@ class GUI:
         for row in finalReport:
             compare.insert(tk.END, row)
 
+    ############################################################
+    ############################################################
     def monitor(self):
-        monitor_freq = tk.Tk()
-        tk.Label(monitor_freq, text='Monitor Freq.').grid(row=0)
-        tk.mainloop()
-
+        return
+    ############################################################
+    ############################################################
 
     def queryScore(self):
         path = (os.getcwd() + "\Comparisons")
@@ -91,9 +89,10 @@ class GUI:
         reports = []
 
         for i in range(len(reportList)):
-            report = open(path + "\\" + reportList[i], encoding="utf8")
+            report = open(path + "\\" + reportList[i])
 
             x = (report.read())
+            y = []
             y = x.splitlines()
 
             reports.append(y)
@@ -122,18 +121,22 @@ class GUI:
 
         bigFlatScore = []
         for i in range(len(flatScore)):
-            bigFlatScore.append([flatScore[i],0])
+            bigFlatScore.append([flatScore[i], 0])
 
         for i in range(len(bigListReport)):
-            if bigListReport[i][1] == "Yes":
+            if bigListReport[i][2] == "Yes":
                 for r in bigFlatScore:
                     if r[0] == bigListReport[i][0]:
                         r[1] += 1
-
         bigFlatScore.pop(0)
+        finalFlatScore = []
+
+        for i in bigFlatScore:
+            if i[1] != 0:
+                finalFlatScore.append(i)
         lists = []
 
-        for row in bigFlatScore:
+        for row in finalFlatScore:
             lists.append(list(row))
             lists.append('\n')
 
@@ -180,10 +183,6 @@ class GUI:
         button = tk.Button(root, text='Delete', command=removeItem)
         button.grid(row=8, column=8)
 
-        #   Listbox
-        label1 = tk.Listbox(root, text='Available Queries', font=('Helvetica', 18, 'bold'))
-        label1.grid(row=0, column=0, padx=10, pady=20)
-
         list = tk.Listbox(root, height=18, width=15, border=0)
         list.grid(row=2, column=0, columnspan=3, rowspan=10, pady=1, padx=5)
         for q in queries:
@@ -192,6 +191,7 @@ class GUI:
         #   ScrollBar
         scrollbar = tk.Scrollbar(root)
         scrollbar.grid(row=2, column=3, padx=40)
+
 
 
 def main():
