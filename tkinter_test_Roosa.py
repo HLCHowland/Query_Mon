@@ -71,14 +71,11 @@ class GUI:
             finalReport.append(i.split(","))
             finalReport.append('\n')
         finalReport.remove(finalReport[0])
-        print(finalReport)
 
         finalReport2 =[]
         for i in finalReport:
             for r in i:
                 finalReport2.append(r)
-        print()
-        print(finalReport2)
 
         for row in finalReport2:
             compare.insert(tk.END, row)
