@@ -57,6 +57,7 @@ class GUI:
 
         # included_cols = [0, 3, 4, 5]
         x = (report.read())
+        x = x.replace('No,', '')
         y = x.splitlines()
         users.append(y)
 
