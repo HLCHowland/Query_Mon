@@ -54,13 +54,15 @@ class GUI:
         reporter = os.listdir(path)
 
         users = []
-        report = open(path + "\\" + reporter[0])
+        for i in range(len(reporter)):
+            report = open(path + "\\" + reporter[i])
 
-        # included_cols = [0, 3, 4, 5]
-        x = (report.read())
-        x = x.replace('No,', '')
-        y = x.splitlines()
-        users.append(y)
+            x = (report.read())
+            x = x.replace('query,', '').replace('dateTime,', '').replace('changeBool,', '').replace('headline,', '').\
+                replace('description,', '').replace('link,', '').replace('link', '')
+            x = x.replace('Yes,', '')
+            y = x.splitlines()
+            users.append(y)
 
         bigReport = []
         for i in users:
@@ -72,12 +74,24 @@ class GUI:
         for i in bigReport:
             finalReport.append(i.split(","))
             finalReport.append('\n')
-        finalReport.remove(finalReport[0])
+
+        for i in range(len(finalReport)):
+            for x in range(len(finalReport[i])):
+                if len(finalReport[i]) > 1:
+                    if finalReport[i][2] == 'No':
+                        finalReport[i] = ''
+            if finalReport[i] == '\n':
+                finalReport[i] = ''
+            if finalReport[i] == ['']:
+                finalReport[i] = ''
+
 
         finalReport2 =[]
         for i in finalReport:
             for r in i:
                 finalReport2.append(r)
+            if i != '':
+                finalReport2.append('\n')
 
         for row in finalReport2:
             compare.insert(tk.END, row)
