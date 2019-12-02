@@ -49,6 +49,7 @@ class GUI:
         self.queryScore()
 
     def reportList(self):
+        compare.delete(0, tk.END)
         path = (os.getcwd() + "\Comparisons")
         reporter = os.listdir(path)
 
@@ -89,6 +90,7 @@ class GUI:
     ############################################################
 
     def queryScore(self):
+        reportcount.delete(0, tk.END)
         path = (os.getcwd() + "\Comparisons")
         reportList = os.listdir(path)
 
