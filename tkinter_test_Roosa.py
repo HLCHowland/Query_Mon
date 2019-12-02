@@ -55,9 +55,9 @@ class GUI:
         users = []
         report = open(path + "\\" + reporter[0])
 
+        # included_cols = [0, 3, 4, 5]
         x = (report.read())
         y = x.splitlines()
-
         users.append(y)
 
         bigReport = []
@@ -66,13 +66,21 @@ class GUI:
                 bigReport.append(r)
 
         finalReport = []
-        # included_cols = [0, 3, 4, 5]
 
         for i in bigReport:
             finalReport.append(i.split(","))
             finalReport.append('\n')
+        finalReport.remove(finalReport[0])
+        print(finalReport)
 
-        for row in finalReport:
+        finalReport2 =[]
+        for i in finalReport:
+            for r in i:
+                finalReport2.append(r)
+        print()
+        print(finalReport2)
+
+        for row in finalReport2:
             compare.insert(tk.END, row)
 
     ############################################################
