@@ -104,7 +104,7 @@ class GUI:
     ############################################################
 
     def queryScore(self):
-        reportcount.delete(0, tk.END)
+                reportcount.delete(0, tk.END)
         path = (os.getcwd() + "\Comparisons")
         reportList = os.listdir(path)
 
@@ -151,6 +151,7 @@ class GUI:
                     if r[0] == bigListReport[i][0]:
                         r[1] += 1
         bigFlatScore.pop(0)
+
         finalFlatScore = []
 
         for i in bigFlatScore:
@@ -162,8 +163,23 @@ class GUI:
             lists.append(list(row))
             lists.append('\n')
 
+        lists2 = []
+
         for i in lists:
-            reportcount.insert(tk.END, i)
+            for r in i:
+                lists2.append(r)
+
+        for i in range(len(lists2)):
+            lists2[0+x:2+x] = [':  '.join(map(str, lists2[0+x:2+x]))]
+            x +=2
+
+        lists3 = []
+        for i in lists2:
+            if i != '':
+                lists3.append(i)
+
+        for row in lists3:
+            reportcount.insert(tk.END, row)
 
     def Queries(self):
 
