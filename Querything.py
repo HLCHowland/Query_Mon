@@ -13,24 +13,76 @@ with open("queries.pickle", "rb") as fp:
 def addItem():
     add = e1.get()
     list.insert('end', add)
+    with open("queries.pickle", "wb") as fp:
+        pickle.dump(queries, fp)
+    queries.append(add)
     e1.delete(0, 'end')
 
 #   Remove the selected item from the listbox
 def deleteselectedItem():
     current_selection = list.curselection()
     list.delete(current_selection)
+    with open("queries.pickle", "wb") as fp:
+        pickle.dump(queries, fp)
 
-#   Remove the input item from the listbox.
 def removeItem():
     dele = e2.get()
-    for i in dele[::-1]:
-        list.delete(i)
+    for i in range(len(queries) - 1):
+        print(i)
+        if dele == queries[i]:
+            print(dele)
+            print()
+            print()
+            print()
+
+            queries.pop(i)
+            list.delete(i)
+
+            print(queries)
+            with open("queries.pickle", "wb") as fp:
+                pickle.dump(queries, fp)
+
+            e2.delete(0, 'end')
+
+    #   Remove the input item from the listbox.
+# def removeItem():
+#     dele = e2.get()
+#
+#     for i in range(len(queries)+1):
+#         if queries[i] == dele:
+#             print(queries[i])
+#             queries.pop(i)
+#             with open("queries.pickle", "wb") as fp:
+#                 pickle.dump(queries,fp)
+#
+#
+#             delindex = i
+#             list.delete(i)
+#             e2.delete(0, 'end')
+#             # for i in range(len(queries)):
+#
+#                     # for i in delindex[::-1]:
+#
+#
+#             print()
+#             print()
+#             print()
+#             print(queries)
+
+
+
+
     e2.delete(0, 'end')
+
+
+
 
 
 #   Clear the list.
 def clearA():
     list.delete(0, END)
+    with open("queries.pickle", "wb") as fp:
+        pickle.dump(queries, fp)
 
 
 #   Main Window
