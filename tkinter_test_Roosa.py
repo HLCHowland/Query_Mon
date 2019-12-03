@@ -383,20 +383,20 @@ def monitor():
         i += 1
 
 class GUI:
-
+#generates the main menu window
     def main_menu(self):
         global master
         master = tk.Tk()
         master.title("Searching for Change")
         tk.Label(master, text="Main Menu", font=('Helvetica', 16, 'bold')).grid(row=0, column=0)
-
+ #creates buttons thatt call the actual functions
         tk.Button(master, text='Query', command=self.Queries).grid(row=1, column=0, sticky=tk.W, padx=4, pady=4)
         tk.Button(master, text='Monitor', command=self.monitor).grid(row=1, column=2, sticky=tk.W, padx=4, pady=4)
         tk.Button(master, text='Report', command=self.reports).grid(row=1, column=6, sticky=tk.W, padx=4, pady=4)
-
+#creates labels for listbox outputs
         tk.Label(master, text="Reports", font=('Helvetica', 14, 'bold')).grid(row=2, column=0, sticky=tk.W)
         tk.Label(master, text="Comparisons", font=('Helvetica', 14, 'bold')).grid(row=2, column=6, sticky=tk.W)
-
+#builds scrollbars
         vertical = tk.Scrollbar(master, orient=tk.VERTICAL)
         vertical.grid(row=3, column=3, rowspan=1, sticky=(tk.N, tk.S))
 
@@ -408,26 +408,26 @@ class GUI:
 
         horizontal2 = tk.Scrollbar(master, orient=tk.HORIZONTAL)
         horizontal2.grid(row=4, column=6, columnspan=3, sticky=(tk.W, tk.E))
-
+#creates the Comparisons listbox
         global reportcount
         reportcount = tk.Listbox(master, yscrollcommand=vertical2.set, xscrollcommand=horizontal2.set,
                                  width=40, height=20)
         reportcount.grid(row=3, column=6, columnspan=3)
         vertical2.config(command=reportcount.yview)
         horizontal2.config(command=reportcount.xview)
-
+#creates the Reports list box
         global compare
         compare = tk.Listbox(master, yscrollcommand=vertical.set, xscrollcommand=horizontal.set, width=90, height=20)
         compare.grid(row=3, column=0, columnspan=3)
         vertical.config(command=compare.yview)
         horizontal.config(command=compare.xview)
-
+#runs the tkinter window
         tk.mainloop()
-
+# when the Report button is pressed reports calls both reportList and queryScore
     def reports(self):
         self.reportList()
         self.queryScore()
-
+# gets values for Report listbox from comparisons directory
     def reportList(self):
         compare.delete(0, tk.END)
         path = (os.getcwd() + "\Comparisons")
@@ -436,14 +436,14 @@ class GUI:
         users = []
         for i in range(len(reporter)):
             report = open(path + "\\" + reporter[i])
-
+# gets rid of column headers
             x = (report.read())
             x = x.replace('query,', '').replace('dateTime,', '').replace('changeBool,', '').replace('headline,', '').\
                 replace('description,', '').replace('link,', '').replace('link', '')
             x = x.replace('Yes,', '')
             y = x.splitlines()
             users.append(y)
-
+#shuffles results into useable format
         bigReport = []
         for i in users:
             for r in i:
@@ -454,7 +454,7 @@ class GUI:
         for i in bigReport:
             finalReport.append(i.split(","))
             finalReport.append('\n')
-
+#removes results that returned no change
         for i in range(len(finalReport)):
             for x in range(len(finalReport[i])):
                 if len(finalReport[i]) > 1:
@@ -470,23 +470,23 @@ class GUI:
                 finalReport2.append(r)
             if i != '':
                 finalReport2.append('\n')
-
+#inserts results into the compare listbox under Results label
         for row in finalReport2:
             compare.insert(tk.END, row)
 
-
+#begins MonitirThread function that runs mian program
     def monitor(self):
         monitorThread = threading.Thread(target=monitor)
         monitorThread.start()
         return
-
+#gets search results for queryScore from Comparisons Directory
     def queryScore(self):
         reportcount.delete(0, tk.END)
         path = (os.getcwd() + "\Comparisons")
         reportList = os.listdir(path)
 
         reports = []
-
+#suffles results into useable format
         for i in range(len(reportList)):
             report = open(path + "\\" + reportList[i])
 
@@ -507,7 +507,7 @@ class GUI:
             bigListReport.append((i.split(",")))
 
         score = []
-
+#scores the amount of per query where returned new results
         for i in range(len(bigListReport)):
             score.append([bigListReport[i][0]])
             x = 0
@@ -530,7 +530,7 @@ class GUI:
         bigFlatScore.pop(0)
 
         finalFlatScore = []
-
+# if no change than Query removed from output
         for i in bigFlatScore:
             if i[1] != 0:
                 finalFlatScore.append(i)
@@ -545,7 +545,7 @@ class GUI:
         for i in lists:
             for r in i:
                 lists2.append(r)
-
+# reformats into output pleasent view
         for i in range(len(lists2)):
             lists2[0+x:2+x] = [':  '.join(map(str, lists2[0+x:2+x]))]
             x +=2
@@ -554,7 +554,7 @@ class GUI:
         for i in lists2:
             if i != '':
                 lists3.append(i)
-
+# inserts into reportcount list box under Comparisons Header
         for row in lists3:
             reportcount.insert(tk.END, row)
 
@@ -647,11 +647,11 @@ class GUI:
         # scrollbar = tk.Scrollbar(root)
         # scrollbar.grid(row=2, column=3, padx=40)
 
-
+# main function creates instance of GUI as run
 def main():
 
     run = GUI()
     run.main_menu()
 
-
+# runs Program
 main()
